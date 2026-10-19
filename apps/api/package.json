@@ -1,0 +1,40 @@
+{
+  "name": "@finsight/api",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "test": "node --import tsx --test src/app.test.ts src/db/repository.integration.test.ts src/services/invoice-validation.test.ts src/services/auth.test.ts src/services/ocr-provider.test.ts src/services/invoice-extraction.test.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.45.4",
+    "express": "^4.21.2",
+    "multer": "^2.0.2",
+    "pg": "^8.13.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.5",
+    "@types/express": "^5.0.0",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.12.0",
+    "@types/supertest": "^6.0.2",
+    "drizzle-kit": "^0.31.11",
+    "supertest": "^7.0.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.7.2"
+  },
+  "overrides": {
+    "esbuild": "^0.25.4"
+  }
+}

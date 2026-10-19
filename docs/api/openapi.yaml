@@ -1,0 +1,339 @@
+openapi: 3.1.0
+info:
+  title: FinSight API
+  version: 0.2.0
+  description: >
+    Tenant-scoped invoice review API. Session cookies are HttpOnly and
+    SameSite=Strict. File storage remains local to the API server.
+servers:
+  - url: http://localhost:3001
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: finsight_session
+  schemas:
+    InvoiceInput:
+      type: object
+      required: [invoiceNumber, supplier, issueDate, currency, subtotal, tax, total, lineItems]
+      properties:
+        invoiceNumber:
+          type: string
+          maxLength: 100
+        supplier:
+          type: string
+          maxLength: 200
+        issueDate:
+          type: string
+          format: date
+        dueDate:
+          type: string
+          format: date
+        currency:
+          type: string
+          pattern: "^[A-Z]{3}$"
+        subtotal:
+          type: number
+          minimum: 0
+        tax:
+          type: number
+          minimum: 0
+        total:
+          type: number
+          minimum: 0
+        lineItems:
+          type: array
+          minItems: 1
+          maxItems: 500
+          items:
+            type: object
+            required: [description, quantity, unitPrice, amount]
+            properties:
+              description:
+                type: string
+                maxLength: 500
+              quantity:
+                type: number
+                minimum: 0
+              unitPrice:
+                type: number
+                minimum: 0
+              amount:
+                type: number
+                minimum: 0
+    InvoiceStatus:
+      type: string
+      enum: [needs_review, approved, rejected]
+paths:
+  /api/health:
+    get:
+      summary: Check API health
+      responses:
+        "200":
+          description: API is responding.
+  /api/db/health:
+    get:
+      summary: Check PostgreSQL connectivity
+      responses:
+        "200":
+          description: Database connection is healthy.
+        "503":
+          description: Database is unavailable.
+  /api/auth/register:
+    post:
+      summary: Create a private organization and its first administrator
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, fullName, organizationName, password]
+              properties:
+                email: { type: string, format: email }
+                fullName: { type: string, maxLength: 120 }
+                organizationName: { type: string, minLength: 2, maxLength: 120 }
+                password: { type: string, minLength: 12, maxLength: 128 }
+      responses:
+        "201":
+          description: Organization created and session cookie set.
+        "400":
+          description: Invalid registration data.
+        "409":
+          description: Email is already registered.
+  /api/auth/login:
+    post:
+      summary: Create a session
+      responses:
+        "200":
+          description: Signed-in account and session cookie.
+        "401":
+          description: Invalid credentials.
+  /api/auth/logout:
+    post:
+      summary: Clear the session cookie
+      responses:
+        "200":
+          description: Session cookie cleared.
+  /api/auth/me:
+    get:
+      summary: Read the current session
+      security:
+        - sessionCookie: []
+      responses:
+        "200":
+          description: Current user and tenant identifiers.
+        "401":
+          description: No valid session.
+  /api/invoices/parse:
+    post:
+      summary: Validate caller-supplied invoice fields
+      description: This endpoint performs deterministic checks only; it does not run OCR or approve invoices.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceInput"
+      responses:
+        "200":
+          description: Invoice fields validated; warnings may still be present.
+        "400":
+          description: Invalid invoice fields.
+  /api/invoices:
+    get:
+      summary: List invoices in the current organization
+      security:
+        - sessionCookie: []
+      responses:
+        "200":
+          description: Tenant-scoped invoices with line items.
+        "401":
+          description: No valid session.
+    post:
+      summary: Validate and save a new invoice for human review
+      security:
+        - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceInput"
+      responses:
+        "201":
+          description: Invoice stored with needs_review status.
+        "400":
+          description: Invalid invoice fields.
+        "401":
+          description: No valid session.
+        "403":
+          description: Viewer role cannot create invoices.
+        "409":
+          description: Duplicate supplier invoice number.
+  /api/invoices/{id}:
+    put:
+      summary: Update invoice fields and return it to review
+      security:
+        - sessionCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceInput"
+      responses:
+        "200":
+          description: Updated invoice; a fields_updated review event is appended.
+        "404":
+          description: Invoice not found in this organization.
+  /api/invoices/{id}/status:
+    patch:
+      summary: Approve or reject an invoice with a recorded reason
+      security:
+        - sessionCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status, reason]
+              properties:
+                status:
+                  $ref: "#/components/schemas/InvoiceStatus"
+                reason:
+                  type: string
+                  minLength: 3
+                  maxLength: 1000
+      responses:
+        "200":
+          description: Status updated and review history appended.
+        "400":
+          description: Invalid status or missing review reason.
+        "404":
+          description: Invoice not found in this organization.
+        "409":
+          description: Status transition is not allowed.
+  /api/invoices/{id}/history:
+    get:
+      summary: Read review history for an organization-owned invoice
+      security:
+        - sessionCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Append-only review events.
+        "404":
+          description: Invoice not found in this organization.
+  /api/documents:
+    get:
+      summary: List documents for the current organization
+      security:
+        - sessionCookie: []
+      responses:
+        "200":
+          description: Tenant-scoped document metadata.
+    post:
+      summary: Upload a PDF or image to private local API storage
+      security:
+        - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: File signature and type verified; metadata saved in PostgreSQL.
+        "400":
+          description: Missing file or file signature mismatch.
+        "401":
+          description: No valid session.
+        "403":
+          description: Viewer role cannot upload documents.
+        "413":
+          description: File exceeds 12 MiB.
+        "415":
+          description: Unsupported declared file type.
+  /api/documents/{id}/file:
+    get:
+      summary: Download an uploaded document after tenant authorization
+      security:
+        - sessionCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Authorized original file returned as an attachment.
+        "404":
+          description: Document not found in this organization.
+  /api/documents/{id}/ocr:
+    post:
+      summary: Run local English/Arabic OCR and save page evidence
+      description: Synchronous processing is limited to 12 MiB and 20 PDF pages. Requires reviewer or administrator access.
+      security:
+        - sessionCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: OCR text, page segmentation, word confidence/bounding boxes, and persisted review-only structured field candidates with evidence.
+        "401":
+          description: No valid session.
+        "403":
+          description: Viewer role cannot run OCR.
+        "404":
+          description: Document not found in this organization.
+        "409":
+          description: OCR is already running for this document.
+        "422":
+          description: OCR could not process the document.
+        "503":
+          description: Local OCR service is unavailable or busy.
+  /api/documents/{id}/extraction:
+    get:
+      summary: Read the latest tenant-scoped OCR result and field candidates
+      security:
+        - sessionCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Latest OCR output, persisted source-page evidence, and nullable schema-versioned invoice candidate fields. Candidate confidence is a label-match heuristic and does not verify financial correctness.
+        "401":
+          description: No valid session.
+        "404":
+          description: Document or OCR result not found in this organization.

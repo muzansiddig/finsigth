@@ -1,0 +1,7 @@
+ALTER TABLE "invoice_items" ADD CONSTRAINT "invoice_items_amounts_nonnegative_check" CHECK ("invoice_items"."quantity" >= 0 and "invoice_items"."unit_price" >= 0 and "invoice_items"."amount" >= 0);--> statement-breakpoint
+ALTER TABLE "invoices" ADD CONSTRAINT "invoices_status_check" CHECK ("invoices"."status" in ('needs_review', 'approved', 'rejected'));--> statement-breakpoint
+ALTER TABLE "invoices" ADD CONSTRAINT "invoices_amounts_nonnegative_check" CHECK ("invoices"."subtotal" >= 0 and "invoices"."tax" >= 0 and "invoices"."total" >= 0);--> statement-breakpoint
+ALTER TABLE "review_history" ADD CONSTRAINT "review_history_action_check" CHECK ("review_history"."action" in ('created', 'fields_updated', 'status_changed'));--> statement-breakpoint
+ALTER TABLE "uploaded_documents" ADD CONSTRAINT "documents_status_check" CHECK ("uploaded_documents"."status" in ('uploaded', 'processing', 'needs_review', 'failed'));--> statement-breakpoint
+ALTER TABLE "uploaded_documents" ADD CONSTRAINT "documents_size_check" CHECK ("uploaded_documents"."size_bytes" > 0 and "uploaded_documents"."size_bytes" <= 12582912);--> statement-breakpoint
+ALTER TABLE "users" ADD CONSTRAINT "users_role_check" CHECK ("users"."role" in ('admin', 'reviewer', 'viewer'));

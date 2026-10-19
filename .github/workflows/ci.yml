@@ -1,0 +1,78 @@
+name: FinSight CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: finsight_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d finsight_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/finsight_test
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            apps/api/package-lock.json
+            apps/web/package-lock.json
+
+      - name: Install root tooling
+        run: npm ci
+
+      - name: Install API dependencies
+        working-directory: apps/api
+        run: npm ci
+
+      - name: Install web dependencies
+        working-directory: apps/web
+        run: npm ci
+
+      - name: Apply PostgreSQL migrations
+        working-directory: apps/api
+        run: npm run db:migrate
+
+      - name: Test API
+        env:
+          RUN_DB_INTEGRATION_TESTS: '1'
+        run: npm test
+
+      - name: Build API and web
+        run: npm run build
+
+      - name: Audit production API dependencies
+        working-directory: apps/api
+        run: npm audit --omit=dev
+
+      - name: Audit production web dependencies
+        working-directory: apps/web
+        run: npm audit --omit=dev
