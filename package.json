@@ -1,0 +1,16 @@
+{
+  "name": "finsight",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "concurrently \"npm --prefix apps/api run dev\" \"npm --prefix apps/web run dev\"",
+    "dev:api": "npm --prefix apps/api run dev",
+    "dev:web": "npm --prefix apps/web run dev",
+    "build": "npm --prefix apps/api run build && npm --prefix apps/web run build",
+    "test": "npm --prefix apps/api test",
+    "start:api": "npm --prefix apps/api run start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

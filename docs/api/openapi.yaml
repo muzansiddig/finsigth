@@ -1,0 +1,162 @@
+openapi: 3.1.0
+info:
+  title: FinSight Prototype API
+  version: 0.1.0
+  description: >
+    Current prototype contract. Upload and download routes are unauthenticated
+    and must not be exposed to real financial documents.
+servers:
+  - url: http://localhost:3001
+paths:
+  /api/health:
+    get:
+      summary: Check API health
+      responses:
+        "200":
+          description: API is responding.
+  /api/db/health:
+    get:
+      summary: Check PostgreSQL connectivity
+      responses:
+        "200":
+          description: Database connection is healthy.
+        "503":
+          description: Database is unavailable.
+  /api/invoices/demo:
+    get:
+      summary: Get illustrative invoice data
+      responses:
+        "200":
+          description: In-memory demo invoices. Not customer records.
+  /api/invoices/parse:
+    post:
+      summary: Validate caller-supplied invoice fields
+      description: This endpoint does not perform OCR or parse an uploaded document.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InvoiceInput"
+      responses:
+        "200":
+          description: Invoice fields passed schema validation; financial warnings may still be present.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationResult"
+        "400":
+          description: Request does not match the invoice schema.
+  /api/documents:
+    post:
+      summary: Upload a PDF or image to local API storage
+      description: No authentication, tenant isolation, OCR, or PostgreSQL persistence is implemented.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: File passed MIME and signature checks and was stored locally.
+        "400":
+          description: Missing file or file signature mismatch.
+        "413":
+          description: File exceeds 12 MiB.
+        "415":
+          description: Unsupported declared file type.
+  /api/documents/{id}/file:
+    get:
+      summary: Download an uploaded local file
+      description: Prototype endpoint; access is not authenticated.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Original file returned as an attachment.
+        "400":
+          description: Invalid document id.
+        "404":
+          description: Document was not found.
+components:
+  schemas:
+    InvoiceInput:
+      type: object
+      required:
+        - invoiceNumber
+        - supplier
+        - issueDate
+        - currency
+        - subtotal
+        - tax
+        - total
+        - lineItems
+      properties:
+        invoiceNumber:
+          type: string
+        supplier:
+          type: string
+        issueDate:
+          type: string
+        dueDate:
+          type: string
+        currency:
+          type: string
+          pattern: "^[A-Z]{3}$"
+        subtotal:
+          type: number
+          minimum: 0
+        tax:
+          type: number
+          minimum: 0
+        total:
+          type: number
+          minimum: 0
+        lineItems:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required: [description, quantity, unitPrice, amount]
+            properties:
+              description:
+                type: string
+              quantity:
+                type: number
+                minimum: 0
+              unitPrice:
+                type: number
+                minimum: 0
+              amount:
+                type: number
+                minimum: 0
+    ValidationResult:
+      type: object
+      required: [ok, documentType, confidence, status, warnings, extracted]
+      properties:
+        ok:
+          const: true
+        documentType:
+          const: invoice
+        confidence:
+          type: number
+          description: Deterministic validation status score, not model/OCR confidence.
+        status:
+          enum: [verified, needs_review]
+        warnings:
+          type: array
+          items:
+            type: string
+        extracted:
+          $ref: "#/components/schemas/InvoiceInput"

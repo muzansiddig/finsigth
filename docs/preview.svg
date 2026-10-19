@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="930" viewBox="0 0 1440 930" fill="none">
+  <defs>
+    <linearGradient id="canvas" x1="290" y1="90" x2="1230" y2="890" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#F1F5F5"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <style>
+      .ui { font-family: "Segoe UI", Arial, sans-serif; }
+      .muted { fill: #8793A4; }
+      .ink { fill: #243249; }
+      .small { font-size: 13px; }
+    </style>
+  </defs>
+  <rect width="1440" height="930" rx="24" fill="#14243C"/>
+  <rect x="235" width="1205" height="930" fill="url(#canvas)"/>
+  <rect x="0" y="0" width="235" height="930" fill="#14243C"/>
+  <rect x="26" y="28" width="34" height="34" rx="11" fill="#A3E6C5"/>
+  <path d="M37 53V37h15v5H42v3h9v5h-9v3h-5Z" fill="#173F37"/>
+  <text x="72" y="51" class="ui" fill="#fff" font-size="23" font-weight="700">FinSight</text>
+  <text x="28" y="119" class="ui" fill="#8190A6" font-size="11" font-weight="700" letter-spacing="1.5">WORKSPACE</text>
+  <rect x="15" y="137" width="205" height="44" rx="9" fill="#263A54"/>
+  <rect x="15" y="149" width="3" height="21" rx="2" fill="#9BE2BF"/>
+  <text x="40" y="165" class="ui" fill="#fff" font-size="15">▦</text>
+  <text x="65" y="165" class="ui" fill="#fff" font-size="14" font-weight="600">Overview</text>
+  <text x="40" y="218" class="ui" fill="#A9B8CA" font-size="15">▤</text>
+  <text x="65" y="218" class="ui" fill="#CAD4E2" font-size="14">Invoices</text>
+  <rect x="178" y="202" width="25" height="20" rx="10" fill="#3B4D65"/>
+  <text x="187" y="216" class="ui" fill="#D4DFEC" font-size="11">3</text>
+  <text x="40" y="270" class="ui" fill="#A9B8CA" font-size="16">⇧</text>
+  <text x="65" y="270" class="ui" fill="#CAD4E2" font-size="14">Upload documents</text>
+  <circle cx="34" cy="852" r="4" fill="#65D6A0"/>
+  <text x="48" y="857" class="ui" fill="#A6B3C5" font-size="12">Private workspace</text>
+  <line x1="18" y1="880" x2="217" y2="880" stroke="#2A3A50"/>
+  <circle cx="43" cy="905" r="15" fill="#DCEEE6"/>
+  <text x="35" y="909" class="ui" fill="#4F7569" font-size="10" font-weight="700">FS</text>
+  <text x="68" y="902" class="ui" fill="#EDF2F8" font-size="12" font-weight="600">Finance team</text>
+  <text x="68" y="919" class="ui" fill="#9BAABD" font-size="10">Workspace admin</text>
+
+  <rect x="235" width="1205" height="68" fill="#FFFFFF"/>
+  <line x1="235" y1="67.5" x2="1440" y2="67.5" stroke="#EBEDF2"/>
+  <text x="281" y="41" class="ui muted small">Workspace</text>
+  <text x="352" y="41" class="ui" fill="#C1C7D0" font-size="13">/</text>
+  <text x="369" y="41" class="ui ink small" font-weight="600">Overview</text>
+  <text x="1225" y="41" class="ui" fill="#748094" font-size="12">Finance operations</text>
+  <circle cx="1381" cy="34" r="17" fill="#DCEEE6"/>
+  <text x="1373" y="38" class="ui" fill="#4F7569" font-size="10" font-weight="700">FS</text>
+
+  <text x="281" y="116" class="ui muted" font-size="10" font-weight="700" letter-spacing="1.4">MONDAY, OCTOBER 19</text>
+  <text x="281" y="155" class="ui" fill="#19283C" font-size="31" font-weight="700">Good morning, team</text>
+  <text x="281" y="180" class="ui" fill="#8590A1" font-size="13">Your invoice operations at a glance.</text>
+  <rect x="1239" y="130" width="157" height="40" rx="8" fill="#20866A"/>
+  <text x="1260" y="155" class="ui" fill="#fff" font-size="12" font-weight="700">＋  Upload invoice</text>
+
+  <g class="ui">
+    <rect x="281" y="205" width="266" height="131" rx="11" fill="#fff" stroke="#E9ECF2"/>
+    <rect x="300" y="222" width="29" height="29" rx="8" fill="#EFEFFC"/>
+    <text x="309" y="242" fill="#6662B6" font-size="14">▤</text>
+    <rect x="467" y="224" width="62" height="21" rx="11" fill="#EDF8F1"/>
+    <text x="489" y="238" fill="#87909F" font-size="10">Demo</text>
+    <text x="300" y="273" fill="#8490A1" font-size="11">Illustrative invoices</text>
+    <text x="300" y="304" fill="#243249" font-size="27" font-weight="700">03</text>
+    <text x="300" y="323" fill="#98A1AE" font-size="10">Not persisted records</text>
+
+    <rect x="560" y="205" width="266" height="131" rx="11" fill="#fff" stroke="#E9ECF2"/>
+    <rect x="579" y="222" width="29" height="29" rx="8" fill="#FFF5E3"/>
+    <text x="589" y="242" fill="#B37B29" font-size="15">◷</text>
+    <rect x="735" y="224" width="75" height="21" rx="11" fill="#F3F4F6"/>
+    <text x="744" y="238" fill="#87909F" font-size="9">Selected invoice</text>
+    <text x="579" y="273" fill="#8490A1" font-size="11">Line items</text>
+    <text x="579" y="304" fill="#243249" font-size="27" font-weight="700">02</text>
+    <text x="579" y="323" fill="#98A1AE" font-size="10">In the current review form</text>
+
+    <rect x="839" y="205" width="266" height="131" rx="11" fill="#fff" stroke="#E9ECF2"/>
+    <rect x="858" y="222" width="29" height="29" rx="8" fill="#E7F7EF"/>
+    <text x="867" y="242" fill="#238364" font-size="14">✓</text>
+    <rect x="1017" y="224" width="65" height="21" rx="11" fill="#EDF8F1"/>
+    <text x="1028" y="238" fill="#44866C" font-size="10">Rule checks</text>
+    <text x="858" y="273" fill="#8490A1" font-size="11">Current validation</text>
+    <text x="858" y="304" fill="#243249" font-size="27" font-weight="700">Pass</text>
+    <text x="858" y="323" fill="#98A1AE" font-size="10">Rule checks, not approval</text>
+
+    <rect x="1118" y="205" width="278" height="131" rx="11" fill="#fff" stroke="#E9ECF2"/>
+    <rect x="1137" y="222" width="29" height="29" rx="8" fill="#EDF4F9"/>
+    <text x="1145" y="242" fill="#5A738E" font-size="14">$</text>
+    <rect x="1308" y="224" width="70" height="21" rx="11" fill="#F3F4F6"/>
+    <text x="1326" y="238" fill="#87909F" font-size="9">Selected</text>
+    <text x="1137" y="273" fill="#8490A1" font-size="11">Current invoice total</text>
+    <text x="1137" y="304" fill="#243249" font-size="25" font-weight="700">1,375 <tspan fill="#8290A1" font-size="11">USD</tspan></text>
+    <text x="1137" y="323" fill="#98A1AE" font-size="10">Illustrative invoice value</text>
+  </g>
+
+  <rect x="281" y="355" width="720" height="209" rx="11" fill="#fff" stroke="#E9ECF2"/>
+  <text x="303" y="383" class="ui" fill="#8993A4" font-size="9" font-weight="700" letter-spacing="1.2">DOCUMENT INTAKE</text>
+  <text x="303" y="407" class="ui" fill="#253249" font-size="16" font-weight="700">Bring your invoices together</text>
+  <rect x="797" y="374" width="180" height="24" rx="5" fill="#F5F7FA"/>
+  <text x="812" y="390" class="ui" fill="#788698" font-size="9" font-weight="700">PDF  ·  PNG  ·  JPG  ·  WEBP</text>
+  <rect x="303" y="425" width="676" height="118" rx="8" fill="#FBFDFC" stroke="#BDD9CB" stroke-dasharray="5 4"/>
+  <rect x="622" y="443" width="36" height="33" rx="9" fill="#E5F5ED"/>
+  <text x="634" y="466" class="ui" fill="#287C60" font-size="20">⇧</text>
+  <text x="525" y="496" class="ui" fill="#435267" font-size="12" font-weight="700">Drop a file here, or browse</text>
+  <text x="486" y="516" class="ui" fill="#98A1AE" font-size="10">Maximum file size 12 MB. Documents are stored privately.</text>
+
+  <rect x="281" y="583" width="720" height="319" rx="11" fill="#fff" stroke="#E9ECF2"/>
+  <text x="303" y="612" class="ui" fill="#8993A4" font-size="9" font-weight="700" letter-spacing="1.2">INVOICE REVIEW</text>
+  <text x="303" y="636" class="ui" fill="#253249" font-size="16" font-weight="700">Review extracted details</text>
+  <rect x="798" y="600" width="89" height="23" rx="12" fill="#EAF7EF"/>
+  <text x="814" y="615" class="ui" fill="#2B8265" font-size="10" font-weight="700">✓ Verified</text>
+  <rect x="895" y="596" width="83" height="32" rx="7" fill="#20866A"/>
+  <text x="908" y="616" class="ui" fill="#fff" font-size="10" font-weight="700">Run checks</text>
+  <g class="ui" fill="#778396" font-size="9">
+    <text x="303" y="666">Invoice number</text><text x="472" y="666">Supplier</text>
+    <text x="641" y="666">Issue date</text><text x="810" y="666">Due date</text>
+  </g>
+  <g fill="#fff" stroke="#E5E9EF">
+    <rect x="303" y="674" width="157" height="33" rx="6"/><rect x="472" y="674" width="157" height="33" rx="6"/>
+    <rect x="641" y="674" width="157" height="33" rx="6"/><rect x="810" y="674" width="168" height="33" rx="6"/>
+  </g>
+  <g class="ui" fill="#344155" font-size="10">
+    <text x="313" y="695">INV-2026-0104</text><text x="482" y="695">Northwind Traders</text>
+    <text x="651" y="695">2026-10-01</text><text x="820" y="695">2026-10-15</text>
+  </g>
+  <line x1="303" y1="729" x2="979" y2="729" stroke="#EFF1F4"/>
+  <text x="303" y="751" class="ui" fill="#455267" font-size="11" font-weight="700">Line items</text>
+  <text x="303" y="776" class="ui muted" font-size="9">DESCRIPTION</text><text x="730" y="776" class="ui muted" font-size="9">QTY</text>
+  <text x="810" y="776" class="ui muted" font-size="9">UNIT PRICE</text><text x="914" y="776" class="ui muted" font-size="9">AMOUNT</text>
+  <line x1="303" y1="787" x2="979" y2="787" stroke="#EFF1F4"/>
+  <g class="ui" fill="#4B576A" font-size="10">
+    <text x="303" y="810">Five desktops</text><text x="735" y="810">5</text><text x="813" y="810">200.00</text><text x="918" y="810">1,000.00</text>
+    <text x="303" y="840">Accessories</text><text x="735" y="840">1</text><text x="813" y="840">250.00</text><text x="918" y="840">250.00</text>
+  </g>
+  <line x1="303" y1="854" x2="979" y2="854" stroke="#EFF1F4"/>
+  <text x="699" y="878" class="ui" fill="#7C8796" font-size="9">Items subtotal</text>
+  <text x="784" y="878" class="ui" fill="#344156" font-size="9" font-weight="700">1,250 USD</text>
+  <text x="885" y="878" class="ui" fill="#7C8796" font-size="9">Tax</text>
+  <text x="915" y="878" class="ui" fill="#344156" font-size="9" font-weight="700">125 USD</text>
+
+  <rect x="1018" y="355" width="378" height="547" rx="11" fill="#fff" stroke="#E9ECF2"/>
+  <text x="1040" y="383" class="ui" fill="#8993A4" font-size="9" font-weight="700" letter-spacing="1.2">YOUR WORKSPACE</text>
+  <text x="1040" y="407" class="ui" fill="#253249" font-size="16" font-weight="700">Recent invoices</text>
+  <circle cx="1368" cy="400" r="13" fill="#F0F3F7"/>
+  <text x="1364" y="404" class="ui" fill="#60748E" font-size="10" font-weight="700">3</text>
+  <line x1="1038" y1="430" x2="1376" y2="430" stroke="#F0F2F5"/>
+  <rect x="1040" y="444" width="34" height="34" rx="8" fill="#E9F6ED"/>
+  <text x="1050" y="466" class="ui" fill="#2E8767" font-size="15">▤</text>
+  <text x="1085" y="457" class="ui" fill="#354257" font-size="11" font-weight="700">Northwind Traders</text>
+  <text x="1085" y="473" class="ui" fill="#98A1AD" font-size="9">INV-2026-0104 · 2026-10-01</text>
+  <text x="1320" y="458" class="ui" fill="#435166" font-size="10" font-weight="700">1,375</text>
+  <text x="1347" y="473" class="ui" fill="#9BA4AF" font-size="9">USD</text>
+  <line x1="1038" y1="492" x2="1376" y2="492" stroke="#F0F2F5"/>
+  <rect x="1040" y="505" width="34" height="34" rx="8" fill="#F0EFFB"/>
+  <text x="1050" y="527" class="ui" fill="#7268B7" font-size="15">▤</text>
+  <text x="1085" y="518" class="ui" fill="#354257" font-size="11" font-weight="700">Blue Harbor Services</text>
+  <text x="1085" y="534" class="ui" fill="#98A1AD" font-size="9">INV-2026-0110 · 2026-10-07</text>
+  <text x="1320" y="519" class="ui" fill="#435166" font-size="10" font-weight="700">990</text>
+  <text x="1347" y="534" class="ui" fill="#9BA4AF" font-size="9">USD</text>
+  <line x1="1038" y1="553" x2="1376" y2="553" stroke="#F0F2F5"/>
+  <rect x="1040" y="566" width="34" height="34" rx="8" fill="#FFF2E5"/>
+  <text x="1050" y="588" class="ui" fill="#B67D43" font-size="15">▤</text>
+  <text x="1085" y="579" class="ui" fill="#354257" font-size="11" font-weight="700">Helio Logistics</text>
+  <text x="1085" y="595" class="ui" fill="#98A1AD" font-size="9">INV-2026-0138 · 2026-10-11</text>
+  <text x="1320" y="580" class="ui" fill="#435166" font-size="10" font-weight="700">2,640</text>
+  <text x="1347" y="595" class="ui" fill="#9BA4AF" font-size="9">EUR</text>
+  <rect x="1040" y="619" width="336" height="34" rx="7" fill="#fff" stroke="#E8EDF0"/>
+  <text x="1140" y="641" class="ui" fill="#49856D" font-size="10" font-weight="700">＋  Add another document</text>
+  <rect x="1040" y="677" width="336" height="175" rx="8" fill="#FAFBFC" stroke="#EDF0F3"/>
+  <text x="1054" y="701" class="ui" fill="#8993A4" font-size="9" font-weight="700" letter-spacing="1.1">CURRENT DOCUMENT</text>
+  <rect x="1054" y="720" width="308" height="6" rx="3" fill="#E9EDF0"/>
+  <rect x="1054" y="720" width="296" height="6" rx="3" fill="#58B488"/>
+  <text x="1054" y="748" class="ui" fill="#7C8796" font-size="10">Validation confidence</text>
+  <text x="1324" y="748" class="ui" fill="#3B7E65" font-size="10" font-weight="700">96%</text>
+  <text x="1054" y="778" class="ui" fill="#9BA4AF" font-size="9">Confidence reflects deterministic checks only.</text>
+  <text x="1054" y="794" class="ui" fill="#9BA4AF" font-size="9">It is not an OCR accuracy score.</text>
+  <text x="281" y="917" class="ui" fill="#9BA3B0" font-size="10">FinSight  ·  Finance operations, with clarity.</text>
+  <text x="1214" y="917" class="ui" fill="#9BA3B0" font-size="10">* Demo data — not live financial records.</text>
+</svg>
